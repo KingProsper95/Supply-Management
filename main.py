@@ -2,7 +2,8 @@ import flet as ft
 from config.settings import *
 from components.buttons import SideBarButton
 from components.sidebar import SideBar
-
+from utils.helpers import login
+from pages.login import LoginPage
 
 def main(page: ft.Page):
     page.title = "Camtel Supply App"
@@ -43,6 +44,8 @@ def main(page: ft.Page):
     page.on_route_change = on_route_change
 
     # Start with the default route
-    page.go("/items")
+    #page.go("/items")
+
+    page.add(LoginPage(page))
 
 ft.app(main)

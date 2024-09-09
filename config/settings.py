@@ -7,5 +7,5 @@ HOVER_COLOR = "blue50"
 
 # Base API endpoint
 #! please dont touch this unless your go into production
-BASE_API_URL = "http://localhost/api/"
+BASE_API_URL = "http://127.0.0.1:8000/api/"
 
