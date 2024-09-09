@@ -1,30 +1,48 @@
 import flet as ft
+from config.settings import *
+from components.buttons import SideBarButton
+from components.sidebar import SideBar
 
 
 def main(page: ft.Page):
-    page.title = "Flet counter example"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.title = "Camtel Supply App"
+    page.theme_mode = 'light'
 
-    txt_number = ft.TextField(value="0", text_align=ft.TextAlign.RIGHT, width=100)
+    sidebar = SideBar(page, 'Mr Jerry', 'Admin')
 
-    def minus_click(e):
-        txt_number.value = str(int(txt_number.value) - 1)
-        page.update()
+    def on_route_change(route):
+        # Clear the current views but leave the sidebar intact
+        content = []
 
-    def plus_click(e):
-        txt_number.value = str(int(txt_number.value) + 1)
-        page.update()
+        # Determine which page to show based on the route
+        if page.route == "/overview":
+            content.append(ft.Text("Overview Page"))
+        elif page.route == "/customers":
+            content.append(ft.Text("Customers Page"))
+        elif page.route == "/items":
+            content.append(ft.Text("Items Page"))
+        elif page.route == "/orders":
+            content.append(ft.Text("Orders Page"))
+        elif page.route == "/items_out":
+            content.append(ft.Text("Items Out Page"))
+        elif page.route == "/suppliers":
+            content.append(ft.Text("Suppliers Page"))
+        else:
+            content.append(ft.Text("Welcome to the Dashboard"))
 
-    page.add(
-        ft.Row(
-            [
-                ft.IconButton(ft.icons.REMOVE, on_click=minus_click),
-                txt_number,
-                ft.IconButton(ft.icons.ADD, on_click=plus_click),
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
+        # Add the content to the right side of the layout
+        page.views.append(
+            ft.View(
+                route,
+                controls=[ft.Row([sidebar, ft.VerticalDivider(width=5), ft.Column(content)])]
+            )
         )
-    )
 
+        page.update()
+
+    page.on_route_change = on_route_change
+
+    # Start with the default route
+    page.go("/items")
 
 ft.app(main)
