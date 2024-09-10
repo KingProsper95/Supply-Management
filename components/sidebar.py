@@ -3,13 +3,13 @@ from .buttons import SideBarButton
 from config.settings import *
 
 class SideBar(ft.UserControl):
-    def __init__(self, page:ft.Page, username, description):
+    def __init__(self, page:ft.Page, username=None, role='admin'):
         super().__init__()
         self.page = page  # Store the page object reference
         self.username = username
-        self.description = description
+        self.role = role
 
-         # List of all sidebar buttons
+        # List of all sidebar buttons
         self.buttons = [
             SideBarButton(ft.icons.GRID_VIEW, "Overview", "/overview", on_click=self.navigate_to),
             SideBarButton(ft.icons.PEOPLE, "Customers", "/customers", selected=False, on_click=self.navigate_to),
@@ -50,7 +50,7 @@ class SideBar(ft.UserControl):
                                 color=TEXT_COLOR
                             ),
                             ft.Text(
-                                value=self.description,
+                                value=self.role,
                                 size=16,
                                 weight="w200",
                                 color=TEXT_COLOR,
@@ -65,15 +65,17 @@ class SideBar(ft.UserControl):
     def build(self):
         #defining the characteristics and dimensions of the returned sidebar
         return ft.Container(
-            height=1024,
             width=260,
+            expand=True,
             padding=ft.padding.only(top=10),
             content=ft.Column(
+                expand=True,
                 horizontal_alignment=ft.MainAxisAlignment.CENTER,
                 controls=[
                     self.user_data(),
                     ft.Divider(height=15, color='blue100'),
                     *self.buttons
                 ]
-            )
+            ),
+            bgcolor='blue600'
         )
