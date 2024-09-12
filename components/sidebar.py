@@ -8,6 +8,7 @@ class SideBar(ft.UserControl):
         self.page = page  # Store the page object reference
         self.username = username
         self.role = role
+        self.logo_name = None
 
         # List of all sidebar buttons
         self.buttons = [
@@ -36,7 +37,7 @@ class SideBar(ft.UserControl):
             content= ft.Row(
                 controls = [
                     ft.CircleAvatar(
-                        content=ft.Text("AA"),
+                        content=ft.Text(self.logo_name),
                         bgcolor="blue400",
                         radius=26,
                     ),
@@ -77,5 +78,4 @@ class SideBar(ft.UserControl):
                     *self.buttons
                 ]
             ),
-            bgcolor='blue600'
         )

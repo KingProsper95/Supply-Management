@@ -3,3 +3,5 @@ USERNAME = ''
 ACCESS_TOKEN = ''
 
 REFRESH_TOKEN = ''
+
+HEADERS = {}

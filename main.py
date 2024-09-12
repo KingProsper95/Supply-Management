@@ -3,15 +3,16 @@ from config.settings import *
 from components.sidebar import SideBar
 from pages.login import LoginPage
 from pages.items import ItemsPage
-# from session_manager import SessionManager
 from utils import helpers
 
 def main(page: ft.Page):
     page.theme_mode = 'light'
+    page.theme = ft.Theme(color_scheme_seed=BACKGROUND_COLOR)
+    page.scroll = "auto"
+    
     # Set the initial window width and height
     page.window.width = 1400
     page.window.height = 900
-    
     # Enforce the minimum width and height when resizing
     page.window.min_width = 1250
     page.window.min_height = 800
@@ -20,6 +21,7 @@ def main(page: ft.Page):
 
     def on_route_change(route):
         sidebar.username = helpers.USERNAME
+        sidebar.logo_name = sidebar.username[:2].upper() # getting the first two letters of the username
         if page.route == "/login":
             page.views.append(
                 ft.View(
@@ -39,7 +41,7 @@ def main(page: ft.Page):
             elif page.route == "/customers":
                 content.append(ft.Text("Customers Page"))
             elif page.route == "/items":
-                content.append(ItemsPage(page))
+                content.append(ItemsPage(page, access_token=helpers.ACCESS_TOKEN, refresh_token=helpers.REFRESH_TOKEN))
             elif page.route == "/orders":
                 content.append(ft.Text("Orders Page"))
             elif page.route == "/items_out":
@@ -49,7 +51,7 @@ def main(page: ft.Page):
             else:
                 content.append(ft.Text("Welcome to the Dashboard"))
 
-            # Add the content to the right side of the layout
+            # Add the content to the right side of the layout with scrolling enabled in a Column
             page.views.append(
                 ft.View(
                     route,
@@ -57,13 +59,17 @@ def main(page: ft.Page):
                         ft.Row([
                             sidebar,
                             ft.Container(
-                                content=ft.Column(content),
+                                content=ft.Column(
+                                    content,  # Wrap the content in a Column
+                                    scroll="auto",  # Enable vertical scrolling
+                                    expand=True,  # Make sure the column expands vertically
+                                ),
                                 padding=15,
-                                expand=True, #content takes up the remaining space
-                                bgcolor='red'
+                                expand=True,  # Content takes up the remaining space
+                                bgcolor=BACKGROUND_COLOR,
                             )
                         ],
-                        expand= True
+                        expand=True
                         )
                     ]
                 )
@@ -71,6 +77,6 @@ def main(page: ft.Page):
         page.update()
 
     page.on_route_change = on_route_change
-    page.go("/items")   #default page which is the login page
+    page.go("/items")   # Default page which is the items page
 
 ft.app(target=main)

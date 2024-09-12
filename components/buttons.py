@@ -12,18 +12,19 @@ class SideBarButton(ft.ListTile):
             data=route,
         )
         # Set colors for hover, selected, etc.
-        self.selected_tile_color = HOVER_COLOR
-        self.hover_color = HOVER_COLOR
+        self.selected_color = 'white'
+        self.selected_tile_color = SELECTED_COLOR
+        self.hover_color = 'blue100'
         self.shape = ft.RoundedRectangleBorder(radius=10)
         self.mouse_cursor = 'CLICK'
 
 class SubmitButton(ft.ElevatedButton):
-    def __init__(self, width=0, on_click=None,):
+    def __init__(self, text='submit', width=0, on_click=None):
         super().__init__(
             on_click=on_click,
             width=width
         )
-        self.text = 'Submit'
+        self.text = text
         self.bgcolor = '#134BF2'
         self.color = 'white'
         self.height = 40

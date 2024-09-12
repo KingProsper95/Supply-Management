@@ -16,8 +16,8 @@ class LoginPage(ft.UserControl):
         self.error_message = ft.Text(color='red600')
 
         # defining the page UI
-        self.username_field = LoginInput('username', on_change=self.verify_input)
-        self.password_field = LoginInput('password', password=True, reveal=True, on_change=self.verify_input)
+        self.username_field = LoginInput('username', 400, on_change=self.verify_input)
+        self.password_field = LoginInput('password', 400, password=True, reveal=True, on_change=self.verify_input)
         self.submit_button = SubmitButton(width=400, on_click=self.login)
 
     def verify_input(self, e):
